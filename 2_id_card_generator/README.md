@@ -6,6 +6,7 @@ A Flutter application for generating student ID card based on user input.
 
 <p align="center">
     <img width="300" alt="Image 1" src="https://github.com/user-attachments/assets/eca85631-07ce-4d29-a1c1-15a8abe55c9d" />
+    &nbsp;&nbsp;&nbsp;&nbsp;
     <img width="300" alt="Image 2" src="https://github.com/user-attachments/assets/07c95c00-853a-4b51-a376-0fda7a5b0925" />
 </p>
 
