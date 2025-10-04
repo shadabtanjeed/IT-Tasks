@@ -365,117 +365,119 @@ class _FormPageState extends State<FormPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Form Page')),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text(
-              'Please provide your information',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text(
+                'Please provide your information',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
 
-            SizedBox(height: 20),
+              SizedBox(height: 20),
 
-            const Text('Choose your profile picture'),
+              const Text('Choose your profile picture'),
 
-            SizedBox(height: 20),
+              SizedBox(height: 20),
 
-            ElevatedButton(
-              onPressed: () async {
-                try {
-                  Image? fromPicker = await ImagePickerWeb.getImageAsWidget();
-                  if (fromPicker != null) {
-                    setState(() {
-                      profile_image = fromPicker;
-                    });
+              ElevatedButton(
+                onPressed: () async {
+                  try {
+                    Image? fromPicker = await ImagePickerWeb.getImageAsWidget();
+                    if (fromPicker != null) {
+                      setState(() {
+                        profile_image = fromPicker;
+                      });
 
-                    print('Profile picture selected successfully');
+                      print('Profile picture selected successfully');
+                    }
+                  } catch (e) {
+                    print('Error picking profile picture: $e');
                   }
-                } catch (e) {
-                  print('Error picking profile picture: $e');
-                }
-              },
-              child: const Text('Pick Profile Picture'),
-            ),
+                },
+                child: const Text('Pick Profile Picture'),
+              ),
 
-            SizedBox(height: 20),
+              SizedBox(height: 20),
 
-            if (profile_image != null)
-              SizedBox(height: 150, width: 150, child: profile_image!),
+              if (profile_image != null)
+                SizedBox(height: 150, width: 150, child: profile_image!),
 
-            SizedBox(height: 20),
+              SizedBox(height: 20),
 
-            const Text('Choose your university logo'),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () async {
-                try {
-                  Image? fromPicker = await ImagePickerWeb.getImageAsWidget();
-                  if (fromPicker != null) {
-                    setState(() {
-                      uni_logo = fromPicker;
-                    });
+              const Text('Choose your university logo'),
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () async {
+                  try {
+                    Image? fromPicker = await ImagePickerWeb.getImageAsWidget();
+                    if (fromPicker != null) {
+                      setState(() {
+                        uni_logo = fromPicker;
+                      });
 
-                    print('University logo selected successfully');
+                      print('University logo selected successfully');
+                    }
+                  } catch (e) {
+                    print('Error picking university logo: $e');
                   }
-                } catch (e) {
-                  print('Error picking university logo: $e');
-                }
-              },
-              child: const Text('Pick University Logo'),
-            ),
+                },
+                child: const Text('Pick University Logo'),
+              ),
 
-            SizedBox(height: 20),
+              SizedBox(height: 20),
 
-            if (uni_logo != null)
-              SizedBox(height: 150, width: 150, child: uni_logo!),
+              if (uni_logo != null)
+                SizedBox(height: 150, width: 150, child: uni_logo!),
 
-            SizedBox(height: 20),
+              SizedBox(height: 20),
 
-            TextFormField(
-              decoration: const InputDecoration(labelText: 'University Name'),
-              controller: universityNameController,
-            ),
+              TextFormField(
+                decoration: const InputDecoration(labelText: 'University Name'),
+                controller: universityNameController,
+              ),
 
-            TextFormField(
-              decoration: const InputDecoration(labelText: 'Student Name'),
-              controller: studentNameController,
-            ),
+              TextFormField(
+                decoration: const InputDecoration(labelText: 'Student Name'),
+                controller: studentNameController,
+              ),
 
-            TextFormField(
-              decoration: const InputDecoration(labelText: 'Student ID'),
-              controller: studentIDController,
-            ),
+              TextFormField(
+                decoration: const InputDecoration(labelText: 'Student ID'),
+                controller: studentIDController,
+              ),
 
-            TextFormField(
-              decoration: const InputDecoration(labelText: 'Program'),
-              controller: programController,
-            ),
+              TextFormField(
+                decoration: const InputDecoration(labelText: 'Program'),
+                controller: programController,
+              ),
 
-            TextFormField(
-              decoration: const InputDecoration(labelText: 'Department'),
-              controller: departmentController,
-            ),
+              TextFormField(
+                decoration: const InputDecoration(labelText: 'Department'),
+                controller: departmentController,
+              ),
 
-            TextFormField(
-              decoration: const InputDecoration(labelText: 'Country'),
-              controller: countryController,
-            ),
+              TextFormField(
+                decoration: const InputDecoration(labelText: 'Country'),
+                controller: countryController,
+              ),
 
-            // Subtitle TextBox for dynamic subtitle on the ID card
-            TextFormField(
-              decoration: const InputDecoration(labelText: 'Subtitle'),
-              controller: subtitleController,
-            ),
+              // Subtitle TextBox for dynamic subtitle on the ID card
+              TextFormField(
+                decoration: const InputDecoration(labelText: 'Subtitle'),
+                controller: subtitleController,
+              ),
 
-            SizedBox(height: 20),
+              SizedBox(height: 20),
 
-            ElevatedButton(
-              onPressed: generateIDCard,
-              child: const Text('Generate ID Card'),
-            ),
-          ],
+              ElevatedButton(
+                onPressed: generateIDCard,
+                child: const Text('Generate ID Card'),
+              ),
+            ],
+          ),
         ),
       ),
     );
