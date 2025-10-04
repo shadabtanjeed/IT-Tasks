@@ -94,7 +94,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 ),
                                 clipBehavior: Clip.hardEdge,
                                 child: Image.asset(
-                                  'assets/images/nuh.jpg',
+                                  'assets/images/profile.jpeg',
                                   fit: BoxFit.cover,
                                 ),
                               ),
@@ -141,7 +141,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                           ),
                                           SizedBox(width: 8),
                                           Text(
-                                            '210041160',
+                                            '990103180',
                                             style: TextStyle(
                                               fontWeight: FontWeight.bold,
                                               color: Colors.white,
