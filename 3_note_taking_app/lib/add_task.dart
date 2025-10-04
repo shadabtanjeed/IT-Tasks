@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'models/task.dart';
-import 'services/database_service.dart';
+import 'providers/task_provider.dart';
 
-class AddTaskPage extends StatefulWidget {
+class AddTaskPage extends ConsumerStatefulWidget {
   const AddTaskPage({super.key});
 
   @override
-  State<AddTaskPage> createState() => _AddTaskPageState();
+  ConsumerState<AddTaskPage> createState() => _AddTaskPageState();
 }
 
-class _AddTaskPageState extends State<AddTaskPage> {
+class _AddTaskPageState extends ConsumerState<AddTaskPage> {
   final _titleController = TextEditingController();
   final _descriptionController = TextEditingController();
-  final _dbService = DatabaseService();
+  bool _isSaving = false;
 
   @override
   void dispose() {
@@ -23,23 +24,36 @@ class _AddTaskPageState extends State<AddTaskPage> {
   }
 
   Future<void> _addTask() async {
-    if (_titleController.text.isEmpty) {
+    if (_titleController.text.trim().isEmpty) {
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(const SnackBar(content: Text('Title cannot be empty')));
       return;
     }
 
+    setState(() => _isSaving = true);
+
     final task = Task(
-      title: _titleController.text,
-      description: _descriptionController.text,
+      title: _titleController.text.trim(),
+      description: _descriptionController.text.trim(),
       createdAt: DateTime.now(),
     );
 
-    await _dbService.insertTask(task);
-
-    if (mounted) {
-      context.go('/');
+    try {
+      await ref.read(taskListProvider.notifier).addTask(task);
+      if (mounted) {
+        context.pop();
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Error adding task: $e')));
+      }
+    } finally {
+      if (mounted) {
+        setState(() => _isSaving = false);
+      }
     }
   }
 
@@ -75,6 +89,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
               padding: const EdgeInsets.symmetric(horizontal: 40),
               child: TextField(
                 controller: _titleController,
+                enabled: !_isSaving,
                 decoration: InputDecoration(
                   labelText: 'Title',
                   labelStyle: const TextStyle(color: Color(0xFF134686)),
@@ -101,6 +116,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
               padding: const EdgeInsets.symmetric(horizontal: 40),
               child: TextField(
                 controller: _descriptionController,
+                enabled: !_isSaving,
                 maxLines: 5,
                 decoration: InputDecoration(
                   labelText: 'Description',
@@ -125,7 +141,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
             ),
             const SizedBox(height: 30),
             ElevatedButton(
-              onPressed: _addTask,
+              onPressed: _isSaving ? null : _addTask,
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color(0xFF134686),
                 shape: RoundedRectangleBorder(
@@ -136,10 +152,19 @@ class _AddTaskPageState extends State<AddTaskPage> {
                   vertical: 14,
                 ),
               ),
-              child: const Text(
-                'Add',
-                style: TextStyle(color: Colors.white, fontSize: 20),
-              ),
+              child: _isSaving
+                  ? const SizedBox(
+                      width: 20,
+                      height: 20,
+                      child: CircularProgressIndicator(
+                        color: Colors.white,
+                        strokeWidth: 2,
+                      ),
+                    )
+                  : const Text(
+                      'Add',
+                      style: TextStyle(color: Colors.white, fontSize: 20),
+                    ),
             ),
           ],
         ),
