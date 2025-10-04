@@ -30,7 +30,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 children: [
                   const Center(
                     child: Text(
-                      'My Notes',
+                      'My Tasks',
                       style: TextStyle(
                         fontSize: 36,
                         fontWeight: FontWeight.bold,
@@ -58,7 +58,7 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: () => context.go('/add-task'),
               icon: const Icon(Icons.add, color: Colors.white),
               label: const Text(
-                'Add new note',
+                'Add new task',
                 style: TextStyle(color: Colors.white, fontSize: 20),
               ),
               style: ElevatedButton.styleFrom(
