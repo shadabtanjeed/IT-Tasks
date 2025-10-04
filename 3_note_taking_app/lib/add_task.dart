@@ -1,19 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  void addNote() {
-    setState(() {});
-  }
+class AddTaskPage extends StatelessWidget {
+  const AddTaskPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +18,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 children: [
                   const Center(
                     child: Text(
-                      'My Notes',
+                      'Add new task',
                       style: TextStyle(
                         fontSize: 36,
                         fontWeight: FontWeight.bold,
@@ -39,26 +27,14 @@ class _MyHomePageState extends State<MyHomePage> {
                       textAlign: TextAlign.center,
                     ),
                   ),
-                  Positioned(
-                    right: 16,
-                    child: IconButton(
-                      onPressed: () => context.go('/settings'),
-                      icon: const Icon(
-                        Icons.settings,
-                        color: Color(0xFF134686),
-                        size: 30,
-                      ),
-                    ),
-                  ),
                 ],
               ),
             ),
             const SizedBox(height: 50),
-            ElevatedButton.icon(
-              onPressed: () => context.go('/add-task'),
-              icon: const Icon(Icons.add, color: Colors.white),
-              label: const Text(
-                'Add new note',
+            ElevatedButton(
+              onPressed: () {},
+              child: const Text(
+                'Confirm',
                 style: TextStyle(color: Colors.white, fontSize: 20),
               ),
               style: ElevatedButton.styleFrom(
