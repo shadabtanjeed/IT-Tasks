@@ -112,16 +112,87 @@ class _MyHomePageState extends State<MyHomePage> {
                             horizontal: 16,
                             vertical: 8,
                           ),
-                          child: ListTile(
-                            title: Text(task.title),
-                            subtitle: Text(task.description),
-                            trailing: IconButton(
-                              icon: const Icon(Icons.delete),
-                              onPressed: () => _deleteTask(task.id!),
+                          elevation: 2,
+                          // shape: RoundedRectangleBorder(
+                          //   borderRadius: BorderRadius.circular(12),
+                          //   side: const BorderSide(
+                          //     color: Color(0xFF134686),
+                          //     width: 1,
+                          //   ),
+                          // ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Expanded(
+                                      child: Text(
+                                        task.title,
+                                        style: const TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold,
+                                          color: Color(0xFF134686),
+                                        ),
+                                      ),
+                                    ),
+                                    Row(
+                                      children: [
+                                        IconButton(
+                                          icon: const Icon(
+                                            Icons.edit,
+                                            color: Color(0xFF134686),
+                                          ),
+                                          onPressed: () {},
+                                        ),
+                                        IconButton(
+                                          icon: const Icon(
+                                            Icons.delete,
+                                            color: Color.fromARGB(
+                                              255,
+                                              255,
+                                              95,
+                                              67,
+                                            ),
+                                          ),
+                                          onPressed: () =>
+                                              _deleteTask(task.id!),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 8),
+                                Text(
+                                  task.description,
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    color: Colors.black87,
+                                  ),
+                                ),
+                                const SizedBox(height: 12),
+                                Row(
+                                  children: [
+                                    const Icon(
+                                      Icons.calendar_today,
+                                      size: 16,
+                                      color: Colors.grey,
+                                    ),
+                                    const SizedBox(width: 4),
+                                    Text(
+                                      'Created: ${task.createdAt.day}/${task.createdAt.month}/${task.createdAt.year} ${task.createdAt.hour}:${task.createdAt.minute.toString().padLeft(2, '0')}',
+                                      style: const TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
                             ),
-                            onTap: () {
-                              context.go('/edit-task', extra: task);
-                            },
                           ),
                         );
                       },
