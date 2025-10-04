@@ -35,7 +35,7 @@ class _MyHomePageState extends State<MyHomePage> {
     const double cardHeight = 480.0;
 
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       body: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
