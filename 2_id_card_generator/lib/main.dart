@@ -95,10 +95,15 @@ class _MyHomePageState extends State<MyHomePage> {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: <Widget>[
-                              Image.asset(
-                                'assets/images/iut.png',
+                              SizedBox(
                                 width: 70,
                                 height: 70,
+                                child:
+                                    widget.uni_logo ??
+                                    Image.asset(
+                                      'assets/images/iut.png',
+                                      fit: BoxFit.contain,
+                                    ),
                               ),
                               Text(
                                 widget.universityName,
@@ -119,89 +124,78 @@ class _MyHomePageState extends State<MyHomePage> {
                                   ),
                                 ),
                                 clipBehavior: Clip.hardEdge,
-                                child: Image.asset(
-                                  'assets/images/nuh.jpg',
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                              SizedBox(
-                                width: 170,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: const [
-                                    Icon(
-                                      Icons.key,
-                                      size: 20,
-                                      color: Color(0xFF003433),
+                                child:
+                                    widget.profile_image ??
+                                    Image.asset(
+                                      'assets/images/nuh.jpg',
+                                      fit: BoxFit.cover,
                                     ),
-                                    SizedBox(width: 6),
-                                    Text(
-                                      'Student ID',
-                                      style: TextStyle(
-                                        color: Color(0xFF6B6B6B),
-                                      ),
-                                    ),
-                                  ],
-                                ),
                               ),
-                              SizedBox(
-                                width: 170,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                      padding: const EdgeInsets.symmetric(
-                                        horizontal: 14,
-                                        vertical: 4,
-                                      ),
-                                      decoration: BoxDecoration(
-                                        color: const Color(0xFF003433),
-                                        borderRadius: BorderRadius.circular(15),
-                                      ),
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          CircleAvatar(
-                                            radius: 8,
-                                            backgroundColor: Colors.blue,
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: const [
+                                  Icon(
+                                    Icons.key,
+                                    size: 20,
+                                    color: Color(0xFF003433),
+                                  ),
+                                  SizedBox(width: 6),
+                                  Text(
+                                    'Student ID',
+                                    style: TextStyle(color: Color(0xFF6B6B6B)),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 14,
+                                      vertical: 4,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: const Color(0xFF003433),
+                                      borderRadius: BorderRadius.circular(15),
+                                    ),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        CircleAvatar(
+                                          radius: 8,
+                                          backgroundColor: Colors.blue,
+                                        ),
+                                        SizedBox(width: 8),
+                                        Text(
+                                          widget.studentID,
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white,
                                           ),
-                                          SizedBox(width: 8),
-                                          Text(
-                                            widget.studentID,
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.white,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
+                                        ),
+                                      ],
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
-                              SizedBox(
-                                width: 170,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: const [
-                                    CircleAvatar(
-                                      backgroundColor: Color(0xFF003433),
-                                      radius: 9,
-                                      child: Icon(
-                                        Icons.person,
-                                        color: Colors.white,
-                                        size: 16,
-                                      ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: const [
+                                  CircleAvatar(
+                                    backgroundColor: Color(0xFF003433),
+                                    radius: 9,
+                                    child: Icon(
+                                      Icons.person,
+                                      color: Colors.white,
+                                      size: 16,
                                     ),
-                                    SizedBox(width: 6),
-                                    Text(
-                                      'Student Name',
-                                      style: TextStyle(
-                                        color: Color(0xFF6B6B6B),
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                                  ),
+                                  SizedBox(width: 6),
+                                  Text(
+                                    'Student Name',
+                                    style: TextStyle(color: Color(0xFF6B6B6B)),
+                                  ),
+                                ],
                               ),
                               Text(
                                 widget.studentName,
@@ -211,86 +205,73 @@ class _MyHomePageState extends State<MyHomePage> {
                                   color: Color(0xFF003433),
                                 ),
                               ),
-                              SizedBox(
-                                width: 170,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Icon(
-                                      Icons.school,
-                                      size: 20,
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.school,
+                                    size: 20,
+                                    color: Color(0xFF003433),
+                                  ),
+                                  SizedBox(width: 6),
+                                  Text(
+                                    'Program: ',
+                                    style: TextStyle(color: Color(0xFF6B6B6B)),
+                                  ),
+                                  SizedBox(width: 6),
+                                  Text(
+                                    widget.program,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
                                       color: Color(0xFF003433),
                                     ),
-                                    SizedBox(width: 6),
-                                    Text(
-                                      'Program: ',
-                                      style: TextStyle(
-                                        color: Color(0xFF6B6B6B),
-                                      ),
-                                    ),
-                                    SizedBox(width: 6),
-                                    Text(
-                                      widget.program,
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: Color(0xFF003433),
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
-                              SizedBox(
-                                width: 170,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    CircleAvatar(
-                                      backgroundColor: Color(0xFF003433),
-                                      radius: 9,
-                                      child: Icon(
-                                        Icons.group,
-                                        color: Colors.white,
-                                        size: 16,
-                                      ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  CircleAvatar(
+                                    backgroundColor: Color(0xFF003433),
+                                    radius: 9,
+                                    child: Icon(
+                                      Icons.group,
+                                      color: Colors.white,
+                                      size: 16,
                                     ),
-                                    SizedBox(width: 6),
-                                    Text(
-                                      'Department: ',
-                                      style: TextStyle(
-                                        color: Color(0xFF6B6B6B),
-                                      ),
-                                    ),
-                                    SizedBox(width: 6),
-                                    Text(
-                                      widget.department,
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: Color(0xFF003433),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              SizedBox(
-                                width: 170,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Icon(
-                                      Icons.location_on,
-                                      size: 20,
+                                  ),
+                                  SizedBox(width: 6),
+                                  Text(
+                                    'Department: ',
+                                    style: TextStyle(color: Color(0xFF6B6B6B)),
+                                  ),
+                                  SizedBox(width: 6),
+                                  Text(
+                                    widget.department,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
                                       color: Color(0xFF003433),
                                     ),
-                                    SizedBox(width: 6),
-                                    Text(
-                                      widget.country,
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: Color(0xFF003433),
-                                      ),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.location_on,
+                                    size: 20,
+                                    color: Color(0xFF003433),
+                                  ),
+                                  SizedBox(width: 6),
+                                  Text(
+                                    widget.country,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Color(0xFF003433),
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
                             ],
                           ),
@@ -373,6 +354,8 @@ class _FormPageState extends State<FormPage> {
           department: departmentController.text,
           country: countryController.text,
           subtitle: subtitleController.text,
+          profile_image: profile_image,
+          uni_logo: uni_logo,
         ),
       ),
     );
@@ -478,6 +461,12 @@ class _FormPageState extends State<FormPage> {
             TextFormField(
               decoration: const InputDecoration(labelText: 'Country'),
               controller: countryController,
+            ),
+
+            // Subtitle TextBox for dynamic subtitle on the ID card
+            TextFormField(
+              decoration: const InputDecoration(labelText: 'Subtitle'),
+              controller: subtitleController,
             ),
 
             SizedBox(height: 20),
