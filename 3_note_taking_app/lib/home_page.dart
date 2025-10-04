@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'models/task.dart';
+import 'services/database_service.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
@@ -11,8 +13,28 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  void addNote() {
-    setState(() {});
+  final _dbService = DatabaseService();
+  List<Task> _tasks = [];
+  bool _isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadTasks();
+  }
+
+  Future<void> _loadTasks() async {
+    setState(() => _isLoading = true);
+    final tasks = await _dbService.getAllTasks();
+    setState(() {
+      _tasks = tasks;
+      _isLoading = false;
+    });
+  }
+
+  Future<void> _deleteTask(int id) async {
+    await _dbService.deleteTask(id);
+    _loadTasks();
   }
 
   @override
@@ -53,9 +75,12 @@ class _MyHomePageState extends State<MyHomePage> {
                 ],
               ),
             ),
-            const SizedBox(height: 50),
+            const SizedBox(height: 20),
             ElevatedButton.icon(
-              onPressed: () => context.go('/add-task'),
+              onPressed: () async {
+                await context.push('/add-task');
+                _loadTasks();
+              },
               icon: const Icon(Icons.add, color: Colors.white),
               label: const Text(
                 'Add new task',
@@ -71,6 +96,36 @@ class _MyHomePageState extends State<MyHomePage> {
                   vertical: 14,
                 ),
               ),
+            ),
+            const SizedBox(height: 20),
+            Expanded(
+              child: _isLoading
+                  ? const Center(child: CircularProgressIndicator())
+                  : _tasks.isEmpty
+                  ? const Center(child: Text('No tasks yet'))
+                  : ListView.builder(
+                      itemCount: _tasks.length,
+                      itemBuilder: (context, index) {
+                        final task = _tasks[index];
+                        return Card(
+                          margin: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 8,
+                          ),
+                          child: ListTile(
+                            title: Text(task.title),
+                            subtitle: Text(task.description),
+                            trailing: IconButton(
+                              icon: const Icon(Icons.delete),
+                              onPressed: () => _deleteTask(task.id!),
+                            ),
+                            onTap: () {
+                              context.go('/edit-task', extra: task);
+                            },
+                          ),
+                        );
+                      },
+                    ),
             ),
           ],
         ),
