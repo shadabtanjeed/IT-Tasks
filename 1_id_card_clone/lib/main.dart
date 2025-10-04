@@ -50,177 +50,193 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Column(
                 children: [
                   Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: <Widget>[
-                          Image.asset(
-                            'assets/images/iut.png',
-                            width: 70,
-                            height: 70,
-                          ),
-                          Text(
-                            'ISLAMIC UNIVERSITY OF TECHNOLOGY',
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.w900,
-                              fontSize: 14.21,
+                    child: Stack(
+                      children: [
+                        Container(
+                          height: 180,
+                          width: double.infinity,
+                          decoration: const BoxDecoration(
+                            color: Color(0xFF003433),
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(16),
+                              topRight: Radius.circular(16),
                             ),
                           ),
-                          Container(
-                            width: 115,
-                            height: 115,
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: const Color(0xFF003433),
-                                width: 5,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(20.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: <Widget>[
+                              Image.asset(
+                                'assets/images/iut.png',
+                                width: 70,
+                                height: 70,
                               ),
-                            ),
-                            clipBehavior: Clip.hardEdge,
-                            child: Image.asset(
-                              'assets/images/nuh.jpg',
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
-                              Icon(
-                                Icons.key,
-                                size: 20,
-                                color: Color(0xFF003433),
-                              ),
-                              SizedBox(width: 6),
-                              Text(
-                                'Student ID',
-                                style: TextStyle(color: Color(0xFF6B6B6B)),
-                              ),
-                            ],
-                          ),
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 14,
-                              vertical: 4,
-                            ),
-                            decoration: BoxDecoration(
-                              color: const Color(0xFF003433),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                const CircleAvatar(
-                                  radius: 8,
-                                  backgroundColor: Colors.blue,
+                              const Text(
+                                'ISLAMIC UNIVERSITY OF TECHNOLOGY',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w900,
+                                  fontSize: 14.21,
+                                  color: Colors.white,
                                 ),
-                                const SizedBox(width: 8),
-                                const Text(
-                                  '210041160',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
+                              ),
+                              Container(
+                                width: 115,
+                                height: 115,
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: const Color(0xFF003433),
+                                    width: 5,
                                   ),
                                 ),
-                              ],
-                            ),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
-                              CircleAvatar(
-                                backgroundColor: Color(0xFF003433),
-                                radius: 9,
-                                child: Icon(
-                                  Icons.person,
-                                  color: Colors.white,
-                                  size: 16,
+                                clipBehavior: Clip.hardEdge,
+                                child: Image.asset(
+                                  'assets/images/nuh.jpg',
+                                  fit: BoxFit.cover,
                                 ),
                               ),
-                              SizedBox(width: 6),
-                              Text(
-                                'Student Name',
-                                style: TextStyle(color: Color(0xFF6B6B6B)),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: const [
+                                  Icon(
+                                    Icons.key,
+                                    size: 20,
+                                    color: Color(0xFF003433),
+                                  ),
+                                  SizedBox(width: 6),
+                                  Text(
+                                    'Student ID',
+                                    style: TextStyle(color: Color(0xFF6B6B6B)),
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
-                          const Text(
-                            'SHADAB TANJEED AHMAD',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w900,
-                              color: Color(0xFF003433),
-                            ),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
-                              Icon(
-                                Icons.school,
-                                size: 20,
-                                color: Color(0xFF003433),
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 14,
+                                  vertical: 4,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: const Color(0xFF003433),
+                                  borderRadius: BorderRadius.circular(15),
+                                ),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: const [
+                                    CircleAvatar(
+                                      radius: 8,
+                                      backgroundColor: Colors.blue,
+                                    ),
+                                    SizedBox(width: 8),
+                                    Text(
+                                      '210041160',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
-                              SizedBox(width: 6),
-                              Text(
-                                'Program: ',
-                                style: TextStyle(color: Color(0xFF6B6B6B)),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: const [
+                                  CircleAvatar(
+                                    backgroundColor: Color(0xFF003433),
+                                    radius: 9,
+                                    child: Icon(
+                                      Icons.person,
+                                      color: Colors.white,
+                                      size: 16,
+                                    ),
+                                  ),
+                                  SizedBox(width: 6),
+                                  Text(
+                                    'Student Name',
+                                    style: TextStyle(color: Color(0xFF6B6B6B)),
+                                  ),
+                                ],
                               ),
-                              SizedBox(width: 6),
-                              Text(
-                                'B.Sc in CSE',
+                              const Text(
+                                'SHADAB TANJEED AHMAD',
                                 style: TextStyle(
-                                  fontWeight: FontWeight.bold,
+                                  fontWeight: FontWeight.w900,
                                   color: Color(0xFF003433),
                                 ),
                               ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: const [
+                                  Icon(
+                                    Icons.school,
+                                    size: 20,
+                                    color: Color(0xFF003433),
+                                  ),
+                                  SizedBox(width: 6),
+                                  Text(
+                                    'Program: ',
+                                    style: TextStyle(color: Color(0xFF6B6B6B)),
+                                  ),
+                                  SizedBox(width: 6),
+                                  Text(
+                                    'B.Sc in CSE',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Color(0xFF003433),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: const [
+                                  CircleAvatar(
+                                    backgroundColor: Color(0xFF003433),
+                                    radius: 9,
+                                    child: Icon(
+                                      Icons.group,
+                                      color: Colors.white,
+                                      size: 16,
+                                    ),
+                                  ),
+                                  SizedBox(width: 6),
+                                  Text(
+                                    'Department: ',
+                                    style: TextStyle(color: Color(0xFF6B6B6B)),
+                                  ),
+                                  SizedBox(width: 6),
+                                  Text(
+                                    'CSE',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Color(0xFF003433),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: const [
+                                  Icon(
+                                    Icons.location_on,
+                                    size: 20,
+                                    color: Color(0xFF003433),
+                                  ),
+                                  SizedBox(width: 6),
+                                  Text(
+                                    'Bangladesh',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Color(0xFF003433),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ],
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
-                              CircleAvatar(
-                                backgroundColor: Color(0xFF003433),
-                                radius: 9,
-                                child: Icon(
-                                  Icons.group,
-                                  color: Colors.white,
-                                  size: 16,
-                                ),
-                              ),
-                              SizedBox(width: 6),
-                              Text(
-                                'Department: ',
-                                style: TextStyle(color: Color(0xFF6B6B6B)),
-                              ),
-                              SizedBox(width: 6),
-                              Text(
-                                'CSE',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Color(0xFF003433),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
-                              Icon(
-                                Icons.location_on,
-                                size: 20,
-                                color: Color(0xFF003433),
-                              ),
-                              SizedBox(width: 6),
-                              Text(
-                                'Bangladesh',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Color(0xFF003433),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                   Container(
