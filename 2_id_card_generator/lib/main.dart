@@ -28,7 +28,7 @@ class MyHomePage extends StatefulWidget {
   const MyHomePage({
     super.key,
     required this.title,
-    required this.unversityName,
+    required this.universityName,
     required this.studentName,
     required this.studentID,
     required this.program,
@@ -40,7 +40,7 @@ class MyHomePage extends StatefulWidget {
   });
 
   final String title;
-  final String unversityName;
+  final String universityName;
   final String studentName;
   final String studentID;
   final String program;
@@ -100,8 +100,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                 width: 70,
                                 height: 70,
                               ),
-                              const Text(
-                                'ISLAMIC UNIVERSITY OF TECHNOLOGY',
+                              Text(
+                                widget.universityName,
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   fontWeight: FontWeight.w900,
@@ -160,14 +160,14 @@ class _MyHomePageState extends State<MyHomePage> {
                                       ),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.min,
-                                        children: const [
+                                        children: [
                                           CircleAvatar(
                                             radius: 8,
                                             backgroundColor: Colors.blue,
                                           ),
                                           SizedBox(width: 8),
                                           Text(
-                                            '210041160',
+                                            widget.studentID,
                                             style: TextStyle(
                                               fontWeight: FontWeight.bold,
                                               color: Colors.white,
@@ -203,8 +203,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                   ],
                                 ),
                               ),
-                              const Text(
-                                'SHADAB TANJEED AHMAD',
+                              Text(
+                                widget.studentName,
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   fontWeight: FontWeight.w900,
@@ -215,7 +215,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 width: 170,
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
-                                  children: const [
+                                  children: [
                                     Icon(
                                       Icons.school,
                                       size: 20,
@@ -230,7 +230,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                     ),
                                     SizedBox(width: 6),
                                     Text(
-                                      'B.Sc in CSE',
+                                      widget.program,
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         color: Color(0xFF003433),
@@ -243,7 +243,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 width: 170,
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
-                                  children: const [
+                                  children: [
                                     CircleAvatar(
                                       backgroundColor: Color(0xFF003433),
                                       radius: 9,
@@ -262,7 +262,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                     ),
                                     SizedBox(width: 6),
                                     Text(
-                                      'CSE',
+                                      widget.department,
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         color: Color(0xFF003433),
@@ -275,7 +275,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 width: 170,
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
-                                  children: const [
+                                  children: [
                                     Icon(
                                       Icons.location_on,
                                       size: 20,
@@ -283,7 +283,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                     ),
                                     SizedBox(width: 6),
                                     Text(
-                                      'Bangladesh',
+                                      widget.country,
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         color: Color(0xFF003433),
@@ -309,9 +309,9 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     ),
                     alignment: Alignment.center,
-                    child: const Text(
-                      'A subsidiary organ of OIC',
-                      style: TextStyle(
+                    child: Text(
+                      widget.subtitle,
+                      style: const TextStyle(
                         color: Colors.white,
                         fontStyle: FontStyle.italic,
                       ),
@@ -334,7 +334,7 @@ class FormPage extends StatefulWidget {
 }
 
 class _FormPageState extends State<FormPage> {
-  final unversityNameController = TextEditingController();
+  final universityNameController = TextEditingController();
   final studentNameController = TextEditingController();
   final studentIDController = TextEditingController();
   final programController = TextEditingController();
@@ -366,7 +366,7 @@ class _FormPageState extends State<FormPage> {
       MaterialPageRoute(
         builder: (context) => MyHomePage(
           title: 'Student ID Card',
-          unversityName: unversityNameController.text,
+          universityName: universityNameController.text,
           studentName: studentNameController.text,
           studentID: studentIDController.text,
           program: programController.text,
@@ -387,21 +387,72 @@ class _FormPageState extends State<FormPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text('Please provide your information'),
+            const Text(
+              'Please provide your information',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+
+            SizedBox(height: 20),
 
             const Text('Choose your profile picture'),
 
+            SizedBox(height: 20),
+
             ElevatedButton(
-              onPressed: pickImage,
+              onPressed: () async {
+                try {
+                  Image? fromPicker = await ImagePickerWeb.getImageAsWidget();
+                  if (fromPicker != null) {
+                    setState(() {
+                      profile_image = fromPicker;
+                    });
+
+                    print('Profile picture selected successfully');
+                  }
+                } catch (e) {
+                  print('Error picking profile picture: $e');
+                }
+              },
               child: const Text('Pick Profile Picture'),
             ),
 
-            if (selectedImage != null)
-              SizedBox(height: 150, width: 150, child: selectedImage!),
+            SizedBox(height: 20),
+
+            if (profile_image != null)
+              SizedBox(height: 150, width: 150, child: profile_image!),
+
+            SizedBox(height: 20),
+
+            const Text('Choose your university logo'),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () async {
+                try {
+                  Image? fromPicker = await ImagePickerWeb.getImageAsWidget();
+                  if (fromPicker != null) {
+                    setState(() {
+                      uni_logo = fromPicker;
+                    });
+
+                    print('University logo selected successfully');
+                  }
+                } catch (e) {
+                  print('Error picking university logo: $e');
+                }
+              },
+              child: const Text('Pick University Logo'),
+            ),
+
+            SizedBox(height: 20),
+
+            if (uni_logo != null)
+              SizedBox(height: 150, width: 150, child: uni_logo!),
+
+            SizedBox(height: 20),
 
             TextFormField(
               decoration: const InputDecoration(labelText: 'University Name'),
-              controller: unversityNameController,
+              controller: universityNameController,
             ),
 
             TextFormField(
@@ -428,6 +479,8 @@ class _FormPageState extends State<FormPage> {
               decoration: const InputDecoration(labelText: 'Country'),
               controller: countryController,
             ),
+
+            SizedBox(height: 20),
 
             ElevatedButton(
               onPressed: generateIDCard,
