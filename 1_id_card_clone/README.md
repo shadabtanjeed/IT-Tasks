@@ -4,7 +4,7 @@ A Student ID Card Clone built using Flutter.
 
 ## Screenshots
 
-<img width="572" height="885" alt="Image" src="https://github.com/user-attachments/assets/f8566369-db44-42e7-bc77-426c6102326f" />
+<img width="300" height="465" alt="Image" src="https://github.com/user-attachments/assets/f8566369-db44-42e7-bc77-426c6102326f" />
 
 ## Getting Started
 
