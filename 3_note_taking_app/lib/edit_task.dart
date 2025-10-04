@@ -33,10 +33,6 @@ class EditTaskPage extends StatelessWidget {
             const SizedBox(height: 50),
             ElevatedButton(
               onPressed: () {},
-              child: const Text(
-                'Confirm Changes',
-                style: TextStyle(color: Colors.white, fontSize: 20),
-              ),
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color(0xFF134686),
                 shape: RoundedRectangleBorder(
@@ -46,6 +42,10 @@ class EditTaskPage extends StatelessWidget {
                   horizontal: 20,
                   vertical: 14,
                 ),
+              ),
+              child: const Text(
+                'Confirm Changes',
+                style: TextStyle(color: Colors.white, fontSize: 20),
               ),
             ),
           ],
