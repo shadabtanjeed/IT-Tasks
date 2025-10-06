@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:go_router/go_router.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
-class SignUpPage extends StatefulWidget {
-  const SignUpPage({super.key});
+class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
 
   @override
-  State<SignUpPage> createState() => _SignUpPageState();
+  State<LoginPage> createState() => _LoginPageState();
 }
 
-class _SignUpPageState extends State<SignUpPage> {
+class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController _usernameController = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
+  final _usernameController = TextEditingController();
+  final _passwordController = TextEditingController();
   bool _obscurePassword = true;
   bool _isLoading = false;
 
@@ -22,93 +21,87 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   void dispose() {
     _usernameController.dispose();
-    _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
   }
 
-  // Create or update a record in the `users` table.
-  Future<void> _createUserRecord(
-    String username,
-    String email,
-    String? userId,
-  ) async {
+  Future<void> _submit() async {
+    if (!(_formKey.currentState?.validate() ?? false)) return;
+    setState(() => _isLoading = true);
+
+    final username = _usernameController.text.trim();
+    final password = _passwordController.text;
+
     try {
-      // Only insert username and email (your DB uses username as primary key).
-      final payload = <String, Object?>{'username': username, 'email': email};
+      // Look up email by username in the users table
+      final resp = await _supabase
+          .from('users')
+          .select('email')
+          .eq('username', username)
+          .maybeSingle();
 
-      // Try insert (will fail on duplicate username) — catch duplicates below.
-      await _supabase.from('users').insert(payload).select();
-      return;
-    } catch (e) {
-      final msg = e.toString().toLowerCase();
-
-      // Ignore duplicate / unique constraint errors (username already exists).
-      if (msg.contains('duplicate') ||
-          msg.contains('unique') ||
-          msg.contains('already exists')) {
+      if (resp == null) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Username not found'),
+              backgroundColor: Colors.red,
+            ),
+          );
+        }
         return;
       }
 
-      debugPrint('createUserRecord error: $e');
-      if (mounted) {
+      final email = (resp as Map<String, dynamic>)['email'] as String?;
+      if (email == null || email.isEmpty) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('No email associated with this username'),
+              backgroundColor: Colors.red,
+            ),
+          );
+        }
+        return;
+      }
+
+      // Sign in with the retrieved email + password
+      final result = await _supabase.auth.signInWithPassword(
+        email: email,
+        password: password,
+      );
+
+      if (!mounted) return;
+
+      if (result.session != null) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Failed to store user: $e'),
+          const SnackBar(
+            content: Text('Signed in successfully'),
+            backgroundColor: Colors.green,
+          ),
+        );
+        // Navigate to home
+        context.go('/home');
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text(
+              'Sign in failed — check credentials or confirm email',
+            ),
             backgroundColor: Colors.orange,
           ),
         );
       }
-    }
-  }
-
-  Future<void> _submit() async {
-    if (!(_formKey.currentState?.validate() ?? false)) return;
-
-    setState(() => _isLoading = true);
-
-    try {
-      final username = _usernameController.text.trim();
-      final email = _emailController.text.trim();
-      final password = _passwordController.text;
-
-      // Create the user (email+password) and store username in user_metadata
-      final signUpResponse = await _supabase.auth.signUp(
-        email: email,
-        password: password,
-        data: {'username': username},
-      );
-
-      if (!mounted) return;
-
-      // If Supabase returned a user id immediately, store a users table record.
-      if (signUpResponse.user?.id != null) {
-        await _createUserRecord(username, email, signUpResponse.user!.id);
-      }
-
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text(
-              'Account created — please sign in with your username and password',
-            ),
-            backgroundColor: Colors.green,
-          ),
-        );
-        // Redirect to sign in page
-        context.go('/login');
-      }
-      return;
-    } on AuthException catch (error) {
+    } on AuthException catch (e) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(error.message), backgroundColor: Colors.red),
+        SnackBar(content: Text(e.message), backgroundColor: Colors.red),
       );
-    } catch (error) {
+    } catch (e) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Unexpected error: $error'),
+          content: Text('Unexpected error: $e'),
           backgroundColor: Colors.red,
         ),
       );
@@ -123,7 +116,6 @@ class _SignUpPageState extends State<SignUpPage> {
     final horizontalPadding = size.width * 0.08;
     final topPadding = size.height * 0.06;
     final verticalSpacing = size.height * 0.02;
-
     final availableHeight =
         size.height - MediaQuery.of(context).padding.vertical;
 
@@ -141,9 +133,8 @@ class _SignUpPageState extends State<SignUpPage> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
                     SizedBox(height: topPadding / 2),
-
                     Text(
-                      'Sign Up',
+                      'Sign In',
                       style: TextStyle(
                         fontSize: size.width * 0.08,
                         fontWeight: FontWeight.bold,
@@ -151,9 +142,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       ),
                       textAlign: TextAlign.center,
                     ),
-
                     SizedBox(height: verticalSpacing * 2),
-
                     Form(
                       key: _formKey,
                       child: Column(
@@ -175,35 +164,7 @@ class _SignUpPageState extends State<SignUpPage> {
                               return null;
                             },
                           ),
-
                           SizedBox(height: verticalSpacing),
-
-                          TextFormField(
-                            controller: _emailController,
-                            keyboardType: TextInputType.emailAddress,
-                            textInputAction: TextInputAction.next,
-                            enabled: !_isLoading,
-                            decoration: const InputDecoration(
-                              labelText: 'Email',
-                              border: OutlineInputBorder(),
-                              prefixIcon: Icon(Icons.email),
-                            ),
-                            validator: (value) {
-                              if (value == null || value.trim().isEmpty) {
-                                return 'Please enter an email';
-                              }
-                              final email = value.trim();
-                              if (!RegExp(
-                                r"^[^@\s]+@[^@\s]+\.[^@\s]+$",
-                              ).hasMatch(email)) {
-                                return 'Enter a valid email address';
-                              }
-                              return null;
-                            },
-                          ),
-
-                          SizedBox(height: verticalSpacing),
-
                           TextFormField(
                             controller: _passwordController,
                             obscureText: _obscurePassword,
@@ -229,15 +190,10 @@ class _SignUpPageState extends State<SignUpPage> {
                               if (value == null || value.isEmpty) {
                                 return 'Please enter a password';
                               }
-                              if (value.length < 6) {
-                                return 'Password must be at least 6 characters';
-                              }
                               return null;
                             },
                           ),
-
                           SizedBox(height: verticalSpacing * 2),
-
                           SizedBox(
                             height: 48,
                             child: ElevatedButton(
@@ -263,18 +219,17 @@ class _SignUpPageState extends State<SignUpPage> {
                                             ),
                                       ),
                                     )
-                                  : const Text('Sign Up'),
+                                  : const Text('Sign In'),
                             ),
                           ),
-
                           const SizedBox(height: 12),
-
-                          // Already have account -> go to login
                           TextButton(
                             onPressed: _isLoading
                                 ? null
-                                : () => context.go('/login'),
-                            child: const Text('Already have an account? Login'),
+                                : () => context.go('/signup'),
+                            child: const Text(
+                              'Don\'t have an account? Sign up',
+                            ),
                           ),
                         ],
                       ),

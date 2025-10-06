@@ -1,17 +1,26 @@
-import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter/material.dart';
+import 'login.dart';
 import 'signup.dart';
-import 'navbar.dart';
+import 'home_page.dart';
 
 final GoRouter appRouter = GoRouter(
+  initialLocation: '/login',
   routes: <RouteBase>[
-    // Signup route outside the ShellRoute so it is NOT wrapped by NavBar
     GoRoute(
-      path: '/',
+      path: '/login',
+      name: 'login',
+      builder: (context, state) => const LoginPage(),
+    ),
+    GoRoute(
+      path: '/signup',
       name: 'signup',
-      builder: (BuildContext context, GoRouterState state) =>
-          const SignUpPage(),
+      builder: (context, state) => const SignUpPage(),
+    ),
+    GoRoute(
+      path: '/home',
+      name: 'home',
+      builder: (context, state) => const HomePage(),
     ),
   ],
 );
-// ...existing code...
