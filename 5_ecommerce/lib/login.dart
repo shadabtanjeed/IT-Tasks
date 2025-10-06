@@ -226,6 +226,12 @@ class _LoginPageState extends State<LoginPage> {
                           TextButton(
                             onPressed: _isLoading
                                 ? null
+                                : () => context.go('/forgot-password'),
+                            child: const Text('Forgot Password?'),
+                          ),
+                          TextButton(
+                            onPressed: _isLoading
+                                ? null
                                 : () => context.go('/signup'),
                             child: const Text(
                               'Don\'t have an account? Sign up',
