@@ -2,7 +2,7 @@
 
 A tiny Flutter note-taking app with light and dark themes, task add/edit, and simple local persistence.
 
-Quick run (Flutter):
+## Quick run (Flutter):
 
 1. Clone the repo:
    ```bash
@@ -18,15 +18,14 @@ Quick run (Flutter):
    flutter run
    ```
 
-Highlights:
+## Highlights:
 
 - Two themes: Light and Dark
 - Add / Edit tasks, with timestamps
 - Simple UI scale and theme toggles
 
-Light mode
-
-<p style="display:inline-block;background:#f0f8ff;color:#003366;padding:6px 10px;border-radius:6px">Light mode</p>
+## Screenshots
+### Light mode
 
 <table>
 	<tr>
@@ -39,9 +38,8 @@ Light mode
 	</tr>
 </table>
 
-Dark mode
+### Dark mode
 
-<p style="display:inline-block;background:#222;color:#fff;padding:6px 10px;border-radius:6px">Dark mode</p>
 
 <table>
 	<tr>
