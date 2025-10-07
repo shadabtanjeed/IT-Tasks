@@ -1,38 +1,56 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'home_page.dart';
+import 'cart_page.dart';
+import 'categories_page.dart';
+import 'profile_page.dart';
 
-class Navbar extends StatelessWidget {
-  final Widget child;
-  final String location;
-  const Navbar({super.key, required this.child, required this.location});
+class AppNavShell extends StatefulWidget {
+  const AppNavShell({super.key});
 
-  int _locationToIndex(String location) {
-    if (location.startsWith('/top-stories')) return 1;
-    if (location.startsWith('/best-stories')) return 2;
-    return 0;
-  }
+  @override
+  State<AppNavShell> createState() => _AppNavShellState();
+}
 
-  void _onTap(BuildContext context, int index) {
-    const routes = ['/top-stories', '/best-stories'];
-    final destination = routes[index];
-    if (location != destination) {
-      context.go(destination);
-    }
-  }
+class _AppNavShellState extends State<AppNavShell> {
+  int _currentIndex = 0;
+
+  static const _accent = Color(0xFF134686);
+
+  final List<Widget> _pages = const [
+    HomePage(),
+    CartPage(),
+    CategoriesPage(),
+    ProfilePage(),
+  ];
+
+  final List<String> _titles = const ['Home', 'Cart', 'Categories', 'Profile'];
 
   @override
   Widget build(BuildContext context) {
-    final currentIndex = _locationToIndex(location);
     return Scaffold(
-      body: child,
+      appBar: AppBar(
+        title: Text(_titles[_currentIndex]),
+        backgroundColor: _accent,
+      ),
+      body: IndexedStack(index: _currentIndex, children: _pages),
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: currentIndex,
-        onTap: (i) => _onTap(context, i),
+        currentIndex: _currentIndex,
+        selectedItemColor: _accent,
+        unselectedItemColor: Colors.grey,
+        type: BottomNavigationBarType.fixed,
         items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.fiber_new), label: 'New'),
-          BottomNavigationBarItem(icon: Icon(Icons.trending_up), label: 'Top'),
-          BottomNavigationBarItem(icon: Icon(Icons.star), label: 'Best'),
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.shopping_cart),
+            label: 'Cart',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.category),
+            label: 'Categories',
+          ),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
         ],
+        onTap: (idx) => setState(() => _currentIndex = idx),
       ),
     );
   }

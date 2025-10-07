@@ -1,3 +1,4 @@
+// ...existing code...
 import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
 import 'login.dart';
@@ -5,6 +6,7 @@ import 'signup.dart';
 import 'home_page.dart';
 import 'forgot_password.dart';
 import 'reset_password.dart';
+import 'navbar.dart';
 
 final GoRouter appRouter = GoRouter(
   initialLocation: '/login',
@@ -32,7 +34,7 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: '/home',
       name: 'home',
-      builder: (context, state) => const HomePage(),
+      builder: (context, state) => const AppNavShell(), // use shell with navbar
     ),
   ],
 );

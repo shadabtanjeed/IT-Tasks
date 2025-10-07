@@ -52,7 +52,7 @@ class _LoginPageState extends State<LoginPage> {
         return;
       }
 
-      final email = (resp as Map<String, dynamic>)['email'] as String?;
+      final email = (resp)['email'] as String?;
       if (email == null || email.isEmpty) {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
