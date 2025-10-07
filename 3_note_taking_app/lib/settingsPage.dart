@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'providers/scale_provider.dart';
 
-class SettingsPage extends StatelessWidget {
+class SettingsPage extends ConsumerWidget {
   const SettingsPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final scale = ref.watch(scaleProvider);
+
     return Scaffold(
       body: Center(
         child: Column(
@@ -30,7 +34,48 @@ class SettingsPage extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(height: 50),
+            const SizedBox(height: 24),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'UI scale',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      Text('Current: ${scale.toStringAsFixed(2)}x'),
+                      Slider(
+                        value: scale,
+                        min: 0.8,
+                        max: 1.6,
+                        divisions: 8,
+                        label: '${(scale * 100).round()}%',
+                        onChanged: (v) =>
+                            ref.read(scaleProvider.notifier).setScale(v),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          TextButton(
+                            onPressed: () =>
+                                ref.read(scaleProvider.notifier).setScale(1.0),
+                            child: const Text('Reset'),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),
