@@ -1,6 +1,6 @@
 {
-    "name": "_3_note_taking_app",
-    "short_name": "_3_note_taking_app",
+    "name": "Task Manager",
+    "short_name": "Task Manager",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

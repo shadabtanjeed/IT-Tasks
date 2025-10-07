@@ -38,6 +38,7 @@ dependencies:
   sembast_web: ^2.4.1
   path_provider: ^2.1.4
   path: ^1.9.0
+  url_strategy: ^0.3.0
 
 dev_dependencies:
   flutter_test:
