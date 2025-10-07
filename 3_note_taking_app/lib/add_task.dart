@@ -43,7 +43,7 @@ class _AddTaskPageState extends ConsumerState<AddTaskPage> {
     try {
       await ref.read(taskListProvider.notifier).addTask(task);
       if (mounted) {
-        context.pop();
+        context.go('/');
       }
     } catch (e) {
       if (mounted) {

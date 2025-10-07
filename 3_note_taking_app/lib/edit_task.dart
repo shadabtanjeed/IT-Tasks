@@ -50,11 +50,7 @@ class _EditTaskPageState extends ConsumerState<EditTaskPage> {
     try {
       await ref.read(taskListProvider.notifier).updateTask(updated);
       if (mounted) {
-        if (Navigator.canPop(context)) {
-          context.pop();
-        } else {
-          context.go('/');
-        }
+        context.go('/');
       }
     } catch (e) {
       if (mounted) {
@@ -88,11 +84,7 @@ class _EditTaskPageState extends ConsumerState<EditTaskPage> {
                   const SizedBox(height: 8),
                   ElevatedButton(
                     onPressed: () {
-                      if (Navigator.canPop(context)) {
-                        context.pop();
-                      } else {
-                        context.go('/');
-                      }
+                      context.go('/');
                     },
                     child: const Text('Back'),
                   ),
@@ -129,11 +121,7 @@ class _EditTaskPageState extends ConsumerState<EditTaskPage> {
                         left: 8,
                         child: IconButton(
                           onPressed: () {
-                            if (Navigator.canPop(context)) {
-                              context.pop();
-                            } else {
-                              context.go('/');
-                            }
+                            context.go('/');
                           },
                           icon: Icon(
                             Icons.arrow_back,
