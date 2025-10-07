@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'providers/scale_provider.dart';
 
 class SettingsPage extends ConsumerWidget {
@@ -29,6 +30,23 @@ class SettingsPage extends ConsumerWidget {
                         color: Color(0xFF134686),
                       ),
                       textAlign: TextAlign.center,
+                    ),
+                  ),
+                  Positioned(
+                    left: 8,
+                    child: IconButton(
+                      onPressed: () {
+                        if (Navigator.canPop(context)) {
+                          context.pop();
+                        } else {
+                          context.go('/');
+                        }
+                      },
+                      icon: const Icon(
+                        Icons.arrow_back,
+                        color: Color(0xFF134686),
+                        size: 28,
+                      ),
                     ),
                   ),
                 ],
