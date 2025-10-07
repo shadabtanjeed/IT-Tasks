@@ -155,15 +155,20 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              'Order #$orderId',
-                              style: const TextStyle(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 14,
+                            Expanded(
+                              child: Text(
+                                'Order #$orderId',
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 14,
+                                ),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
                               ),
                             ),
+                            const SizedBox(width: 8),
                             Container(
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 8,
@@ -231,7 +236,7 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
                                     ),
                             ),
                             const SizedBox(width: 12),
-                            Expanded(
+                            Flexible(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [

@@ -30,6 +30,16 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF134686)),
         textTheme: GoogleFonts.interTextTheme(),
         primaryTextTheme: GoogleFonts.interTextTheme(),
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Color(0xFF134686),
+          foregroundColor: Colors.white, // title and icon color
+          titleTextStyle: TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+            fontWeight: FontWeight.w600,
+          ),
+          iconTheme: IconThemeData(color: Colors.white),
+        ),
       ),
       routerConfig: appRouter,
     );

@@ -38,13 +38,24 @@ class _AppNavShellState extends State<AppNavShell> {
     return 0; // home or product details
   }
 
+  String _getAppBarTitle(BuildContext context) {
+    final location = GoRouterState.of(context).uri.path;
+    if (location.startsWith('/order-history')) return 'Order History';
+    if (location.startsWith('/checkout')) return 'Checkout';
+    if (location.startsWith('/product/')) return 'Product Details';
+    if (location.startsWith('/cart')) return 'Cart';
+    if (location.startsWith('/categories')) return 'Categories';
+    if (location.startsWith('/profile')) return 'Profile';
+    return 'Home';
+  }
+
   @override
   Widget build(BuildContext context) {
     final currentIndex = _calculateCurrentIndex(context);
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(_titles[currentIndex]),
+        title: Text(_getAppBarTitle(context)),
         backgroundColor: _accent,
       ),
       body: widget.child,
