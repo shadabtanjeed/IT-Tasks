@@ -90,7 +90,7 @@ class MyApp extends ConsumerWidget {
             horizontal: 20 * scale,
             vertical: 14 * scale,
           ),
-          backgroundColor: professionalBlue,
+          backgroundColor: lightBlueForDark,
           foregroundColor: Colors.white,
         ),
       ),
