@@ -37,6 +37,7 @@ class _AddTaskPageState extends ConsumerState<AddTaskPage> {
       title: _titleController.text.trim(),
       description: _descriptionController.text.trim(),
       createdAt: DateTime.now(),
+      updatedAt: DateTime.now(),
     );
 
     try {

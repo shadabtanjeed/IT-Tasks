@@ -19,9 +19,11 @@ final GoRouter appRouter = GoRouter(
     ),
 
     GoRoute(
-      path: '/edit-task',
-      builder: (BuildContext context, GoRouterState state) =>
-          const EditTaskPage(),
+      path: '/edit-task/:id',
+      builder: (BuildContext context, GoRouterState state) {
+        final id = int.tryParse(state.pathParameters['id'] ?? '');
+        return EditTaskPage(taskId: id);
+      },
     ),
 
     GoRoute(

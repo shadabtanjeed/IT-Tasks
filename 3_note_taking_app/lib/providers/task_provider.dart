@@ -45,4 +45,22 @@ class TaskListNotifier extends StateNotifier<AsyncValue<List<Task>>> {
       state = AsyncValue.error(e, st);
     }
   }
+
+  Future<void> updateTask(Task task) async {
+    try {
+      await _db.updateTask(task);
+      final fresh = await _db.getAllTasks();
+      state = AsyncValue.data(fresh);
+    } catch (e, st) {
+      state = AsyncValue.error(e, st);
+    }
+  }
+
+  Future<Task?> getTaskById(int id) async {
+    try {
+      return await _db.getTaskById(id);
+    } catch (_) {
+      return null;
+    }
+  }
 }

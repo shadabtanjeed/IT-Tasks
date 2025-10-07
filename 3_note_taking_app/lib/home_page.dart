@@ -133,7 +133,8 @@ class MyHomePage extends ConsumerWidget {
                                           color: Color(0xFF134686),
                                         ),
                                         onPressed: () {
-                                          context.go('/edit-task', extra: task);
+                                          // Push the edit page so it can be popped
+                                          context.push('/edit-task/${task.id}');
                                         },
                                       ),
                                       IconButton(
@@ -174,7 +175,7 @@ class MyHomePage extends ConsumerWidget {
                                   ),
                                   const SizedBox(width: 4),
                                   Text(
-                                    'Created: ${task.createdAt.day}/${task.createdAt.month}/${task.createdAt.year} ${task.createdAt.hour}:${task.createdAt.minute.toString().padLeft(2, '0')}',
+                                    'Last updated: ${task.updatedAt.day}/${task.updatedAt.month}/${task.updatedAt.year} ${task.updatedAt.hour}:${task.updatedAt.minute.toString().padLeft(2, '0')}',
                                     style: const TextStyle(
                                       fontSize: 14,
                                       color: Colors.grey,
