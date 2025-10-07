@@ -71,15 +71,32 @@ class _AddTaskPageState extends ConsumerState<AddTaskPage> {
               child: Stack(
                 alignment: Alignment.center,
                 children: [
-                  const Center(
+                  Center(
                     child: Text(
                       'Add new task',
                       style: TextStyle(
                         fontSize: 36,
                         fontWeight: FontWeight.bold,
-                        color: Color(0xFF134686),
+                        color: Theme.of(context).colorScheme.primary,
                       ),
                       textAlign: TextAlign.center,
+                    ),
+                  ),
+                  Positioned(
+                    left: 8,
+                    child: IconButton(
+                      onPressed: () {
+                        if (Navigator.canPop(context)) {
+                          context.pop();
+                        } else {
+                          context.go('/');
+                        }
+                      },
+                      icon: Icon(
+                        Icons.arrow_back,
+                        color: Theme.of(context).colorScheme.primary,
+                        size: 28,
+                      ),
                     ),
                   ),
                 ],
@@ -91,25 +108,11 @@ class _AddTaskPageState extends ConsumerState<AddTaskPage> {
               child: TextField(
                 controller: _titleController,
                 enabled: !_isSaving,
-                decoration: InputDecoration(
-                  labelText: 'Title',
-                  labelStyle: const TextStyle(color: Color(0xFF134686)),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: const BorderSide(color: Color(0xFF134686)),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: const BorderSide(color: Color(0xFF134686)),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: const BorderSide(
-                      color: Color(0xFF134686),
-                      width: 2,
-                    ),
-                  ),
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.onSurface,
                 ),
+                cursorColor: Theme.of(context).colorScheme.primary,
+                decoration: const InputDecoration(labelText: 'Title'),
               ),
             ),
             const SizedBox(height: 20),
@@ -119,25 +122,11 @@ class _AddTaskPageState extends ConsumerState<AddTaskPage> {
                 controller: _descriptionController,
                 enabled: !_isSaving,
                 maxLines: 5,
-                decoration: InputDecoration(
-                  labelText: 'Description',
-                  labelStyle: const TextStyle(color: Color(0xFF134686)),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: const BorderSide(color: Color(0xFF134686)),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: const BorderSide(color: Color(0xFF134686)),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: const BorderSide(
-                      color: Color(0xFF134686),
-                      width: 2,
-                    ),
-                  ),
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.onSurface,
                 ),
+                cursorColor: Theme.of(context).colorScheme.primary,
+                decoration: const InputDecoration(labelText: 'Description'),
               ),
             ),
             const SizedBox(height: 30),

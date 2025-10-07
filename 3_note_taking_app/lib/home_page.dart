@@ -23,13 +23,13 @@ class MyHomePage extends ConsumerWidget {
               child: Stack(
                 alignment: Alignment.center,
                 children: [
-                  const Center(
+                  Center(
                     child: Text(
                       'My Tasks',
                       style: TextStyle(
                         fontSize: 36,
                         fontWeight: FontWeight.bold,
-                        color: Color(0xFF134686),
+                        color: Theme.of(context).colorScheme.primary,
                       ),
                       textAlign: TextAlign.center,
                     ),
@@ -38,9 +38,9 @@ class MyHomePage extends ConsumerWidget {
                     right: 16,
                     child: IconButton(
                       onPressed: () => context.go('/settings'),
-                      icon: const Icon(
+                      icon: Icon(
                         Icons.settings,
-                        color: Color(0xFF134686),
+                        color: Theme.of(context).colorScheme.primary,
                         size: 30,
                       ),
                     ),
@@ -62,7 +62,7 @@ class MyHomePage extends ConsumerWidget {
                       style: TextStyle(color: Colors.white, fontSize: 20),
                     ),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF134686),
+                      backgroundColor: Theme.of(context).colorScheme.primary,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
@@ -118,19 +118,23 @@ class MyHomePage extends ConsumerWidget {
                                   Expanded(
                                     child: Text(
                                       task.title,
-                                      style: const TextStyle(
+                                      style: TextStyle(
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold,
-                                        color: Color(0xFF134686),
+                                        color: Theme.of(
+                                          context,
+                                        ).colorScheme.primary,
                                       ),
                                     ),
                                   ),
                                   Row(
                                     children: [
                                       IconButton(
-                                        icon: const Icon(
+                                        icon: Icon(
                                           Icons.edit,
-                                          color: Color(0xFF134686),
+                                          color: Theme.of(
+                                            context,
+                                          ).colorScheme.primary,
                                         ),
                                         onPressed: () {
                                           // Push the edit page so it can be popped
@@ -160,25 +164,31 @@ class MyHomePage extends ConsumerWidget {
                               const SizedBox(height: 8),
                               Text(
                                 task.description,
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontSize: 16,
-                                  color: Colors.black87,
+                                  color: Theme.of(
+                                    context,
+                                  ).colorScheme.onSurface,
                                 ),
                               ),
                               const SizedBox(height: 12),
                               Row(
                                 children: [
-                                  const Icon(
+                                  Icon(
                                     Icons.calendar_today,
                                     size: 16,
-                                    color: Colors.grey,
+                                    color: Theme.of(
+                                      context,
+                                    ).colorScheme.onSurface.withOpacity(0.6),
                                   ),
                                   const SizedBox(width: 4),
                                   Text(
                                     'Last updated: ${task.updatedAt.day}/${task.updatedAt.month}/${task.updatedAt.year} ${task.updatedAt.hour}:${task.updatedAt.minute.toString().padLeft(2, '0')}',
-                                    style: const TextStyle(
+                                    style: TextStyle(
                                       fontSize: 14,
-                                      color: Colors.grey,
+                                      color: Theme.of(
+                                        context,
+                                      ).colorScheme.onSurface.withOpacity(0.6),
                                     ),
                                   ),
                                 ],

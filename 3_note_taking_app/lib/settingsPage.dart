@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'providers/scale_provider.dart';
+import 'providers/theme_provider.dart';
 
 class SettingsPage extends ConsumerWidget {
   const SettingsPage({super.key});
@@ -9,6 +10,8 @@ class SettingsPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final scale = ref.watch(scaleProvider);
+    final isDark = ref.watch(themeProvider);
+    final colorScheme = Theme.of(context).colorScheme;
 
     return Scaffold(
       body: Center(
@@ -21,13 +24,13 @@ class SettingsPage extends ConsumerWidget {
               child: Stack(
                 alignment: Alignment.center,
                 children: [
-                  const Center(
+                  Center(
                     child: Text(
                       'Settings',
                       style: TextStyle(
                         fontSize: 36,
                         fontWeight: FontWeight.bold,
-                        color: Color(0xFF134686),
+                        color: colorScheme.primary,
                       ),
                       textAlign: TextAlign.center,
                     ),
@@ -42,9 +45,9 @@ class SettingsPage extends ConsumerWidget {
                           context.go('/');
                         }
                       },
-                      icon: const Icon(
+                      icon: Icon(
                         Icons.arrow_back,
-                        color: Color(0xFF134686),
+                        color: colorScheme.primary,
                         size: 28,
                       ),
                     ),
@@ -91,6 +94,22 @@ class SettingsPage extends ConsumerWidget {
                       ),
                     ],
                   ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 16),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: Card(
+                child: SwitchListTile(
+                  title: const Text(
+                    'Dark Mode',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                  value: isDark,
+                  onChanged: (value) {
+                    ref.read(themeProvider.notifier).setDark(value);
+                  },
                 ),
               ),
             ),
