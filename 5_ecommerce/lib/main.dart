@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'cart_provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -12,7 +14,9 @@ Future<void> main() async {
     url: dotenv.env['supabase_url'] ?? '',
     anonKey: dotenv.env['supabase_anon_key'] ?? '',
   );
-  runApp(MyApp());
+  runApp(
+    ChangeNotifierProvider(create: (_) => CartProvider(), child: const MyApp()),
+  );
 }
 
 class MyApp extends StatelessWidget {

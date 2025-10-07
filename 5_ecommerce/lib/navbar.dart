@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'home_page.dart';
-import 'cart_page.dart';
-import 'categories_page.dart';
-import 'profile_page.dart';
+import 'package:go_router/go_router.dart';
 
 class AppNavShell extends StatefulWidget {
-  const AppNavShell({super.key});
+  final Widget child;
+  const AppNavShell({super.key, required this.child});
 
   @override
   State<AppNavShell> createState() => _AppNavShellState();
@@ -16,25 +14,42 @@ class _AppNavShellState extends State<AppNavShell> {
 
   static const _accent = Color(0xFF134686);
 
-  final List<Widget> _pages = const [
-    HomePage(),
-    CartPage(),
-    CategoriesPage(),
-    ProfilePage(),
+  final List<String> _titles = const ['Home', 'Cart', 'Categories', 'Profile'];
+  final List<String> _routes = const [
+    '/home',
+    '/cart',
+    '/categories',
+    '/profile',
   ];
 
-  final List<String> _titles = const ['Home', 'Cart', 'Categories', 'Profile'];
+  void _onTap(int index) {
+    if (_currentIndex != index) {
+      setState(() => _currentIndex = index);
+      context.go(_routes[index]);
+    }
+  }
+
+  // Determine current index based on location
+  int _calculateCurrentIndex(BuildContext context) {
+    final location = GoRouterState.of(context).uri.path;
+    if (location.startsWith('/cart')) return 1;
+    if (location.startsWith('/categories')) return 2;
+    if (location.startsWith('/profile')) return 3;
+    return 0; // home or product details
+  }
 
   @override
   Widget build(BuildContext context) {
+    final currentIndex = _calculateCurrentIndex(context);
+
     return Scaffold(
       appBar: AppBar(
-        title: Text(_titles[_currentIndex]),
+        title: Text(_titles[currentIndex]),
         backgroundColor: _accent,
       ),
-      body: IndexedStack(index: _currentIndex, children: _pages),
+      body: widget.child,
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
+        currentIndex: currentIndex,
         selectedItemColor: _accent,
         unselectedItemColor: Colors.grey,
         type: BottomNavigationBarType.fixed,
@@ -50,7 +65,7 @@ class _AppNavShellState extends State<AppNavShell> {
           ),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
         ],
-        onTap: (idx) => setState(() => _currentIndex = idx),
+        onTap: _onTap,
       ),
     );
   }

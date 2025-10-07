@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'home_carousel_slider.dart' as carousel;
 
 class HomePage extends StatefulWidget {
@@ -296,7 +297,11 @@ class ProductCard extends StatelessWidget {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       elevation: 2,
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          // Navigate to product details page with productId as parameter using go_router
+          // ignore: use_build_context_synchronously
+          GoRouter.of(context).go('/product/${product.productId}');
+        },
         borderRadius: BorderRadius.circular(10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
