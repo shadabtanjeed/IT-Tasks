@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'new_chat.dart';
+import 'pages/chat_page.dart';
 
 void main() => runApp(const MyApp());
 
@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
           iconTheme: IconThemeData(color: Colors.white),
         ),
       ),
-      home: const NewChatPage(),
+      home: const ChatPage(),
     );
   }
 }

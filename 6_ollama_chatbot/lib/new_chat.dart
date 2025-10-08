@@ -137,7 +137,8 @@ class _NewChatPageState extends State<NewChatPage> {
       ];
 
       // Make sure the ollama client is available (initialized in initState)
-      final stream = ollama.chat(messages, model: 'qwen3:0.6b');
+      // final stream = ollama.chat(messages, model: 'qwen3:0.6b');
+      final stream = ollama.chat(messages, model: 'llama3.2:3b');
 
       await for (final chunk in stream) {
         final content = chunk.message?.content;
