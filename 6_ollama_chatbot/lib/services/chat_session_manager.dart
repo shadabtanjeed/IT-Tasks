@@ -58,7 +58,16 @@ class ChatSessionManager {
   ) async {
     final index = allSessions.indexWhere((s) => s.id == session.id);
     if (index != -1) {
-      allSessions[index] = session.copyWith(updatedAt: DateTime.now());
+      // If the session contains no non-empty text messages, remove it from persisted list
+      final hasNonEmpty = session.messages.any(
+        (m) => m.content.trim().isNotEmpty,
+      );
+      if (hasNonEmpty) {
+        allSessions[index] = session.copyWith(updatedAt: DateTime.now());
+      } else {
+        allSessions.removeAt(index);
+      }
+
       await saveSessions(allSessions);
     }
   }

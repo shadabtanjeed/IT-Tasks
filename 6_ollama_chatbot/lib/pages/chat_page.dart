@@ -28,6 +28,7 @@ class _ChatPageState extends State<ChatPage> {
   ChatSession? _currentSession;
   bool _isSending = false;
   bool _isLoading = true;
+  bool _isLoadingHistory = false; // Track if we're loading chat history
   // If true, show <think>...</think> contents; if false, those parts are removed
   bool enableThinking = false;
 
@@ -98,8 +99,18 @@ class _ChatPageState extends State<ChatPage> {
     await _sessionManager.setCurrentSessionId(session.id);
     setState(() {
       _currentSession = session;
+      _isLoadingHistory = true; // Mark that we're loading history
     });
     Navigator.of(context).pop(); // Close drawer
+
+    // Reset the flag after animations complete
+    Future.delayed(const Duration(milliseconds: 500), () {
+      if (mounted) {
+        setState(() {
+          _isLoadingHistory = false;
+        });
+      }
+    });
   }
 
   Future<void> _deleteSession(ChatSession session) async {
@@ -282,13 +293,33 @@ class _ChatPageState extends State<ChatPage> {
                       ),
                       itemCount: _currentSession!.messages.length,
                       itemBuilder: (context, index) {
-                        final msg =
-                            _currentSession!.messages[_currentSession!
-                                    .messages
-                                    .length -
-                                1 -
-                                index];
-                        return _buildMessageBubble(msg);
+                        final total = _currentSession!.messages.length;
+                        // messageIndex is the index in chronological order (0 = oldest)
+                        final messageIndex = total - 1 - index;
+                        final msg = _currentSession!.messages[messageIndex];
+
+                        // Only animate when loading from history
+                        if (_isLoadingHistory) {
+                          // Stagger from top-to-bottom: delay proportional to messageIndex
+                          final delay = (messageIndex * 80).ms;
+
+                          // User messages slide in from right, assistant from left
+                          final beginX = msg.isUser ? 0.6 : -0.6;
+
+                          return _buildMessageBubble(msg)
+                              .animate()
+                              .slideX(
+                                begin: beginX,
+                                end: 0.0,
+                                delay: delay,
+                                duration: 320.ms,
+                                curve: Curves.easeOut,
+                              )
+                              .fadeIn(delay: delay, duration: 240.ms);
+                        } else {
+                          // No animation when actively messaging
+                          return _buildMessageBubble(msg);
+                        }
                       },
                     ),
             ),
