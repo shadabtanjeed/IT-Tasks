@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ollama/ollama.dart' as ollama;
 import 'package:flutter_markdown/flutter_markdown.dart';
@@ -27,6 +28,8 @@ class _ChatPageState extends State<ChatPage> {
   ChatSession? _currentSession;
   bool _isSending = false;
   bool _isLoading = true;
+  // If true, show <think>...</think> contents; if false, those parts are removed
+  bool enableThinking = false;
 
   @override
   void initState() {
@@ -346,7 +349,8 @@ class _ChatPageState extends State<ChatPage> {
               itemBuilder: (context, index) {
                 final session = _allSessions[_allSessions.length - 1 - index];
                 final isActive = session.id == _currentSession?.id;
-                return ListTile(
+
+                final tile = ListTile(
                   leading: Icon(
                     Icons.chat_bubble_outline,
                     color: isActive ? _primaryColor : Colors.grey,
@@ -372,6 +376,18 @@ class _ChatPageState extends State<ChatPage> {
                   selectedTileColor: _primaryColor.withOpacity(0.1),
                   onTap: () => _switchToSession(session),
                 );
+
+                final delay = (index * 80).ms;
+                return tile
+                    .animate()
+                    .slideX(
+                      begin: -0.6,
+                      end: 0.0,
+                      delay: delay,
+                      duration: 350.ms,
+                      curve: Curves.easeOut,
+                    )
+                    .fadeIn(delay: delay, duration: 300.ms);
               },
             ),
           ),
@@ -435,7 +451,21 @@ class _ChatPageState extends State<ChatPage> {
   }
 
   Widget _buildMarkdownWithThinking(String text, Color textColor) {
-    // Handle <think> tags
+    // If thinking is disabled, strip all <think>...</think> blocks and render the rest
+    if (!enableThinking) {
+      final cleaned = text.replaceAll(
+        RegExp(r'<think>.*?<\/think>', dotAll: true),
+        '',
+      );
+      return MarkdownBody(
+        data: cleaned,
+        styleSheet: MarkdownStyleSheet.fromTheme(
+          Theme.of(context),
+        ).copyWith(p: GoogleFonts.inter(color: textColor)),
+      );
+    }
+
+    // Handle <think> tags (thinking enabled)
     final openIdx = text.indexOf('<think>');
     if (openIdx == -1) {
       return MarkdownBody(
