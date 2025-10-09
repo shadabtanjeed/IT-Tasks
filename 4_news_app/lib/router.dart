@@ -10,7 +10,7 @@ final GoRouter appRouter = GoRouter(
   routes: <RouteBase>[
     ShellRoute(
       builder: (BuildContext context, GoRouterState state, Widget child) =>
-          Navbar(child: child, location: state.uri.toString()),
+          Navbar(location: state.uri.toString(), child: child),
       routes: <GoRoute>[
         GoRoute(
           path: '/',
