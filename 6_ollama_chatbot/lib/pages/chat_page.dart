@@ -378,16 +378,84 @@ class _ChatPageState extends State<ChatPage> {
                 );
 
                 final delay = (index * 80).ms;
-                return tile
-                    .animate()
-                    .slideX(
-                      begin: -0.6,
-                      end: 0.0,
-                      delay: delay,
-                      duration: 350.ms,
-                      curve: Curves.easeOut,
-                    )
-                    .fadeIn(delay: delay, duration: 300.ms);
+
+                return Dismissible(
+                  key: ValueKey(session.id),
+                  direction: DismissDirection.startToEnd,
+                  background: Container(
+                    color: Colors.red.shade600,
+                    padding: const EdgeInsets.only(left: 16),
+                    alignment: Alignment.centerLeft,
+                    child: Row(
+                      children: const [
+                        Icon(Icons.delete, color: Colors.white),
+                        SizedBox(width: 8),
+                        Text(
+                          'Delete',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  confirmDismiss: (direction) async {
+                    if (direction == DismissDirection.startToEnd) {
+                      if (_allSessions.length == 1) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Cannot delete the last chat'),
+                          ),
+                        );
+                        return false;
+                      }
+
+                      final result = await showDialog<bool>(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                          title: Text(
+                            'Delete Chat',
+                            style: GoogleFonts.inter(),
+                          ),
+                          content: Text(
+                            'Are you sure you want to delete "${session.title}"?',
+                            style: GoogleFonts.inter(),
+                          ),
+                          actions: [
+                            TextButton(
+                              onPressed: () => Navigator.of(context).pop(false),
+                              child: Text('Cancel', style: GoogleFonts.inter()),
+                            ),
+                            TextButton(
+                              onPressed: () => Navigator.of(context).pop(true),
+                              child: Text(
+                                'Delete',
+                                style: GoogleFonts.inter(color: Colors.red),
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+
+                      if (result == true) {
+                        await _deleteSession(session);
+                        return true;
+                      }
+                    }
+                    return false;
+                  },
+                  child: tile
+                      .animate()
+                      .slideX(
+                        begin: -0.6,
+                        end: 0.0,
+                        delay: delay,
+                        duration: 350.ms,
+                        curve: Curves.easeOut,
+                      )
+                      .fadeIn(delay: delay, duration: 300.ms),
+                );
               },
             ),
           ),
