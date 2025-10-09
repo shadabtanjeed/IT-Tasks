@@ -49,34 +49,33 @@ class _ChatPageState extends State<ChatPage> {
   Future<void> _loadOrCreateSession() async {
     setState(() => _isLoading = true);
 
+    // Always create a fresh chat session on app startup.
     _allSessions = await _sessionManager.loadSessions();
-    final currentId = await _sessionManager.getCurrentSessionId();
-
-    if (currentId != null) {
-      _currentSession = _allSessions.firstWhere(
-        (s) => s.id == currentId,
-        orElse: () =>
-            _allSessions.isNotEmpty ? _allSessions.last : _createEmptySession(),
-      );
-    } else if (_allSessions.isNotEmpty) {
-      _currentSession = _allSessions.last;
-      await _sessionManager.setCurrentSessionId(_currentSession!.id);
-    } else {
-      _currentSession = await _sessionManager.createNewSession(_allSessions);
-      _allSessions = await _sessionManager.loadSessions();
-    }
+    _currentSession = await _sessionManager.createNewSession(_allSessions);
+    _allSessions = await _sessionManager.loadSessions();
 
     setState(() => _isLoading = false);
   }
 
-  ChatSession _createEmptySession() {
-    return ChatSession(
-      id: DateTime.now().millisecondsSinceEpoch.toString(),
-      title: 'Chat 1',
-      createdAt: DateTime.now(),
-      updatedAt: DateTime.now(),
-      messages: [],
-    );
+  String _generateTitleFromMessage(String message) {
+    // Normalize whitespace
+    final cleaned = message.replaceAll(RegExp(r"\s+"), ' ').trim();
+    if (cleaned.isEmpty) {
+      final idx = _allSessions.length + 1;
+      return 'Chat $idx';
+    }
+
+    // Remove common punctuation but keep word characters and spaces
+    final stripped = cleaned.replaceAll(RegExp(r"[^\w\s]"), '');
+    final words = stripped.split(' ').where((w) => w.isNotEmpty).toList();
+    final take = words.take(5).toList();
+    var title = take.join(' ').trim();
+    if (title.isEmpty) {
+      final idx = _allSessions.length + 1;
+      return 'Chat $idx';
+    }
+    if (title.length > 40) title = '${title.substring(0, 37).trim()}...';
+    return title[0].toUpperCase() + title.substring(1);
   }
 
   void _onInputChanged() {
@@ -124,6 +123,8 @@ class _ChatPageState extends State<ChatPage> {
 
     final text = _controller.text.trim();
     if (text.isEmpty || _isSending) return;
+    // Remember whether this session had any messages before this send.
+    final bool wasEmpty = _currentSession!.messages.isEmpty;
 
     final userMessage = ChatMessage(
       role: 'user',
@@ -143,6 +144,16 @@ class _ChatPageState extends State<ChatPage> {
       );
       _isSending = true;
     });
+
+    // If this was the first user message in a new chat, generate a readable title
+    // from the first few words of the message and persist it.
+    if (wasEmpty) {
+      final generated = _generateTitleFromMessage(text);
+      _currentSession = _currentSession!.copyWith(title: generated);
+      await _sessionManager.updateSession(_currentSession!, _allSessions);
+      _allSessions = await _sessionManager.loadSessions();
+      setState(() {});
+    }
 
     _controller.clear();
     _scrollToBottom();
