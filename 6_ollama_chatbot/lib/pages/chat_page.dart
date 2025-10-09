@@ -282,13 +282,27 @@ class _ChatPageState extends State<ChatPage> {
                       ),
                       itemCount: _currentSession!.messages.length,
                       itemBuilder: (context, index) {
-                        final msg =
-                            _currentSession!.messages[_currentSession!
-                                    .messages
-                                    .length -
-                                1 -
-                                index];
-                        return _buildMessageBubble(msg);
+                        final total = _currentSession!.messages.length;
+                        // messageIndex is the index in chronological order (0 = oldest)
+                        final messageIndex = total - 1 - index;
+                        final msg = _currentSession!.messages[messageIndex];
+
+                        // Stagger from top-to-bottom: delay proportional to messageIndex
+                        final delay = (messageIndex * 80).ms;
+
+                        // User messages slide in from right, assistant from left
+                        final beginX = msg.isUser ? 0.6 : -0.6;
+
+                        return _buildMessageBubble(msg)
+                            .animate()
+                            .slideX(
+                              begin: beginX,
+                              end: 0.0,
+                              delay: delay,
+                              duration: 320.ms,
+                              curve: Curves.easeOut,
+                            )
+                            .fadeIn(delay: delay, duration: 240.ms);
                       },
                     ),
             ),

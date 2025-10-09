@@ -24,7 +24,14 @@ class ChatSessionManager {
   Future<void> saveSessions(List<ChatSession> sessions) async {
     try {
       final prefs = await SharedPreferences.getInstance();
-      final sessionsJson = sessions.map((s) => jsonEncode(s.toJson())).toList();
+      // Only persist sessions that contain at least one non-empty message.
+      final sessionsToSave = sessions.where((s) {
+        return s.messages.any((m) => m.content.trim().isNotEmpty);
+      }).toList();
+
+      final sessionsJson = sessionsToSave
+          .map((s) => jsonEncode(s.toJson()))
+          .toList();
       await prefs.setStringList(_sessionsKey, sessionsJson);
     } catch (e) {
       print('Error saving sessions: $e');
@@ -58,7 +65,16 @@ class ChatSessionManager {
   ) async {
     final index = allSessions.indexWhere((s) => s.id == session.id);
     if (index != -1) {
-      allSessions[index] = session.copyWith(updatedAt: DateTime.now());
+      // If the session contains no non-empty text messages, remove it from persisted list
+      final hasNonEmpty = session.messages.any(
+        (m) => m.content.trim().isNotEmpty,
+      );
+      if (hasNonEmpty) {
+        allSessions[index] = session.copyWith(updatedAt: DateTime.now());
+      } else {
+        allSessions.removeAt(index);
+      }
+
       await saveSessions(allSessions);
     }
   }
