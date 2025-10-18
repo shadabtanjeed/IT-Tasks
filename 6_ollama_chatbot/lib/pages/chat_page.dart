@@ -41,7 +41,7 @@ class _ChatPageState extends State<ChatPage> {
   }
 
   void _initializeOllama() {
-    const String hostOverride = 'http://192.168.0.232:11434';
+    const String hostOverride = 'http://10.0.2.2:11434';
     final host = hostOverride.isNotEmpty
         ? hostOverride
         : ((!kIsWeb && Platform.isAndroid)
