@@ -51,14 +51,4 @@ Notes
 - The app uses the public Hacker News API (https://github.com/HackerNews/API). No API key required.
 - Images in this README are thumbnails that link to the full-size images.
 
-Contributing
 
-- Feel free to open issues or submit pull requests. Keep changes small and add tests where appropriate.
-
-License
-
-- MIT — see the repository LICENSE or add one if missing.
-
-Contact
-
-- Maintainer: Shadab Tanjeed — https://github.com/shadabtanjeed
