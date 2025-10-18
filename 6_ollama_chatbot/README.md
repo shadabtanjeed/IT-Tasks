@@ -4,7 +4,7 @@ Minimal Flutter chat client for local Ollama model testing.
 
 Features
 
-- Animated loading screen for chat history
+- Animated loading screen
 - Swipe to delete chats
 
 Prerequisites
@@ -12,6 +12,17 @@ Prerequisites
 - Flutter SDK
 - Ollama running locally (example):
   OLLAMA_HOST=0.0.0.0 ollama serve
+
+### Screenshots
+
+<p>
+  <img src="https://github.com/user-attachments/assets/b35c6c06-f5a9-40c1-98a9-43783145e787" alt="Chat page" width="360" style="max-width:100%;height:auto;margin-right:8px;" />
+  <img src="https://github.com/user-attachments/assets/3c77b350-dc9d-4f94-92fd-c714df4dbd23" alt="Chat page 2" width="360" style="max-width:100%;height:auto;margin-right:8px;" />
+</p>
+
+<p>
+  <img src="https://github.com/user-attachments/assets/71eef5ff-0355-4507-b506-f27a777538aa" alt="Chat History" width="360" style="max-width:100%;height:auto;" />
+</p>
 
 Quick start
 
