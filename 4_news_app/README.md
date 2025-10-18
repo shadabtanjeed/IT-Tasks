@@ -1,64 +1,64 @@
-# News Application
+# 4 News App — Hacker News client
 
-A new Flutter project.
+A lightweight Flutter client for Hacker News. It demonstrates fetching lists of stories (new, top, best) and displaying them in a clean mobile UI.
 
-The topics of this project include:
+Key highlights
 
-- REST API using DIO
-- http package
+- Small, focused Flutter app showcasing REST usage and list navigation
+- Uses Dio and http packages for network calls
+- Simple router and modular widgets for stories lists
 
-The project uses hacker news API to fetch news articles.
-
-Screenshots:
-New stories:
-
-<img width="577" height="950" alt="Image" src="https://github.com/user-attachments/assets/c025b2ad-c536-418e-ade0-b04d72d6dd65" />
-
-Top Stories:
-
-<img width="577" height="950" alt="Image" src="https://github.com/user-attachments/assets/5fa8f396-a77c-45dc-9fef-5282b99ddd75" />
-
-Best Stories:
-
-<img width="577" height="950" alt="Image" src="https://github.com/user-attachments/assets/1257ed7c-4ca0-4af5-bb52-68eb34bb0cd7" />
-
-Get started:
-git clone https://github.com/shadabtanjeed/IT-Tasks/
-cd 4_news_app
-flutter pub get
-
-# News Application
-
-A new Flutter project.
-
-## Features
-
-- REST API using DIO
-- http package
-
-## API
-
-The project uses the Hacker News API to fetch news articles.
-
-## Screenshots
+Screenshots (click to enlarge)
 
 New stories:
 
-<img width="577" height="950" alt="Image" src="https://github.com/user-attachments/assets/c025b2ad-c536-418e-ade0-b04d72d6dd65" />
+<a href="https://github.com/user-attachments/assets/c025b2ad-c536-418e-ade0-b04d72d6dd65" target="_blank" rel="noopener noreferrer"><img src="https://github.com/user-attachments/assets/c025b2ad-c536-418e-ade0-b04d72d6dd65" width="280" alt="New stories screenshot"/></a>
 
-Top Stories:
+Top stories:
 
-<img width="577" height="950" alt="Image" src="https://github.com/user-attachments/assets/5fa8f396-a77c-45dc-9fef-5282b99ddd75" />
+<a href="https://github.com/user-attachments/assets/5fa8f396-a77c-45dc-9fef-5282b99ddd75" target="_blank" rel="noopener noreferrer"><img src="https://github.com/user-attachments/assets/5fa8f396-a77c-45dc-9fef-5282b99ddd75" width="280" alt="Top stories screenshot"/></a>
 
-Best Stories:
+Best stories:
 
-<img width="577" height="950" alt="Image" src="https://github.com/user-attachments/assets/1257ed7c-4ca0-4af5-bb52-68eb34bb0cd7" />
+<a href="https://github.com/user-attachments/assets/1257ed7c-4ca0-4af5-bb52-68eb34bb0cd7" target="_blank" rel="noopener noreferrer"><img src="https://github.com/user-attachments/assets/1257ed7c-4ca0-4af5-bb52-68eb34bb0cd7" width="280" alt="Best stories screenshot"/></a>
 
-## Get started
+Getting started
+
+Clone, install dependencies and run the app (requires Flutter):
 
 ```bash
-git clone https://github.com/shadabtanjeed/IT-Tasks/
+git clone https://github.com/shadabtanjeed/IT-Tasks.git
 cd 4_news_app
 flutter pub get
 flutter run
 ```
+
+Project structure (important files)
+
+- `lib/main.dart` — app entrypoint
+- `lib/router.dart` — simple route handling
+- `lib/new_stories.dart`, `lib/top_stories.dart`, `lib/best_stories.dart` — story list screens
+- `lib/navbar.dart` — bottom navigation
+
+Tech stack
+
+- Flutter
+- Dart
+- Dio and http (network)
+
+Notes
+
+- The app uses the public Hacker News API (https://github.com/HackerNews/API). No API key required.
+- Images in this README are thumbnails that link to the full-size images.
+
+Contributing
+
+- Feel free to open issues or submit pull requests. Keep changes small and add tests where appropriate.
+
+License
+
+- MIT — see the repository LICENSE or add one if missing.
+
+Contact
+
+- Maintainer: Shadab Tanjeed — https://github.com/shadabtanjeed
